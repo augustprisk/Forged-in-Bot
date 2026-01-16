@@ -5,17 +5,23 @@ function readDb(dbName = 'players.json') {
     return JSON.parse(data);
 }
 
-function writeDb(obj, dbName = './players.json') {
-    const jsonData = JSON.parse(dbName)
+function writeDb(userName, contestantName, episode, playerData) {
+    const player = playerData
 
-    if (!obj) { return console.log('Please provide data to save') }
+    playerData.Players[userName].guesses.push(
+        {
+            episode: episode,
+            contestant: contestantName,
+            win: null,
+            finalWeapon: null,
+        }
+    )
 
-    jsonData.propertyName = 'new value'
     try {
-        fs.writeFileSync(dbName, JSON.stringify(obj))
+        fs.writeFileSync('players.json', JSON.stringify(playerData))
         return console.log('Save successful')
     } catch(err) {
-        return console.log('Save Failed')
+        return console.log(`Save Failed: ${err}`)
     }
 }
 
