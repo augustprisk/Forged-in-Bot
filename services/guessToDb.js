@@ -19,7 +19,7 @@ function writeDb(userName, contestantName, season, episode, playerData) {
     )
 
     try {
-        fs.writeFileSync('test.json', JSON.stringify(playerData))
+        fs.writeFileSync('players.json', JSON.stringify(playerData))
         return console.log('Save successful')
     } catch(err) {
         return console.log(`Save Failed: ${err}`)
