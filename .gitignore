@@ -3,3 +3,4 @@ config.json
 .env
 .vscord
 players.json
+test.json
