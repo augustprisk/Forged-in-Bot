@@ -4,11 +4,11 @@ function writeDb(userName, result, weapon, point, playerData) {
   const player = playerData.Players[userName]
   const guesses = player.guesses
   const lastGuess = guesses.at(-1);
-  const points = player.points
 
-  player.points = points + point
   lastGuess.result = result
   lastGuess.finalWeapon = weapon
+
+  (player.points += point) >= 5 && (player.points = 0);
 
   try {
       fs.writeFileSync('players.json', JSON.stringify(playerData))
