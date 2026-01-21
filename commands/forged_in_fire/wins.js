@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { pagination } = require('../../utility/pagination')
+const pagination = require('../../utility/pagination')
 const { getWins } = require('../../utility/getWins');
 
 module.exports = {
@@ -27,7 +27,7 @@ module.exports = {
         embeds.push(new EmbedBuilder().setColor("Blurple").setDescription(`Season: ${win.season} Episode: ${win.episode}, Contestant: ${win.contestant}, Winning Weapon: ${win.finalWeapon}`))
       }
 
-      pagination(interaction, embeds)
+      await pagination(interaction, embeds)
 
     } catch(err) {
       await interaction.reply(

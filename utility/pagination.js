@@ -1,6 +1,6 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
 
-module.exports = async(InteractionCallback, PageSwapEvent, time = 30 * 1000) => {
+module.exports = async(interaction, pages, time = 30 * 1000) => {
 
   try {
     if (!interaction || !pages || !pages > 0) throw new Error('[PAGINATION] Invalid args');
@@ -15,13 +15,13 @@ module.exports = async(InteractionCallback, PageSwapEvent, time = 30 * 1000) => 
 
     const first = new ButtonBuilder()
     .setCustomId('pagefirst')
-    .setEmoji('↞')
+    .setEmoji('⏮️')
     .setStyle(ButtonStyle.Primary)
     .setDisabled(true)
 
     const prev = new ButtonBuilder()
     .setCustomId('pageprev')
-    .setEmoji('←')
+    .setEmoji('◀️')
     .setStyle(ButtonStyle.Primary)
     .setDisabled(true)
 
@@ -33,12 +33,12 @@ module.exports = async(InteractionCallback, PageSwapEvent, time = 30 * 1000) => 
 
     const next = new ButtonBuilder()
     .setCustomId('pagenext')
-    .setEmoji('→')
+    .setEmoji('▶️')
     .setStyle(ButtonStyle.Primary)
 
     const last = new ButtonBuilder()
-    .setCustomId('pagenext')
-    .setEmoji('↠')
+    .setCustomId('pagelast')
+    .setEmoji('⏭️')
     .setStyle(ButtonStyle.Primary)
 
     const buttons = new ActionRowBuilder().addComponents([first, prev, pageCount, next, last]);
@@ -100,6 +100,6 @@ module.exports = async(InteractionCallback, PageSwapEvent, time = 30 * 1000) => 
 
     return msg;
   } catch (err) {
-      console.error(`[ERROR] ${error}`)
+      console.error(`[ERROR] ${err}`)
   }
 }
