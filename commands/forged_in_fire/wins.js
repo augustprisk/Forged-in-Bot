@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { pagination } = require('../../utility/pagination')
-const { getWins } = require('getWins.js');
+const { getWins } = require('../../utility/getWins');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -21,9 +21,14 @@ module.exports = {
 
     try{
       const wins = await getWins(userName);
-      await interaction.reply(
-        `${userName} here are your wins:`
-      )
+      const embeds = [];
+      
+      for (const win of wins) {
+        embeds.push(new EmbedBuilder().setColor("Blurple").setDescription(`Season: ${win.season} Episode: ${win.episode}, Contestant: ${win.contestant}, Winning Weapon: ${win.finalWeapon}`))
+      }
+
+      pagination(interaction, embeds)
+
     } catch(err) {
       await interaction.reply(
         `There was an error with this command: ${err.message}`

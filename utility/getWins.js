@@ -7,6 +7,4 @@ function getWins(userName) {
   return fetchWins(userName, playerData);
 }
 
-console.log(getWins("Grace"));
-
 module.exports = { getWins }
