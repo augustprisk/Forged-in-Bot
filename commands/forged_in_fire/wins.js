@@ -27,7 +27,11 @@ module.exports = {
         embeds.push(new EmbedBuilder().setColor("Blurple").setDescription(`Season: ${win.season} Episode: ${win.episode}, Contestant: ${win.contestant}, Winning Weapon: ${win.finalWeapon}`))
       }
 
-      await pagination(interaction, embeds)
+      if (wins.length === 0){
+        await interaction.reply('You have no wins lmao :sob:')
+      } else {
+        await pagination(interaction, embeds)
+      }
 
     } catch(err) {
       await interaction.reply(
