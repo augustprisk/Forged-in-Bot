@@ -57,7 +57,7 @@ module.exports = {
     } else if (interaction.options.getSubcommand() === 'loss') {
       const result = 'lose';
       const userName = interaction.options.getString('user', true);
-      const weapon = interaction.options.getString('weapon',true);
+      const weapon = interaction.options.getString('weapon', true);
       const point = 0
 
       try {

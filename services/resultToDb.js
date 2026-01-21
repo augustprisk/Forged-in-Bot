@@ -1,12 +1,12 @@
 const fs = require('fs');
 
 function writeDb(userName, result, weapon, point, playerData) {
-  const player = playerData.Players[userName]
-  const guesses = player.guesses
+  const player = playerData.Players[userName];
+  const guesses = player.guesses;
   const lastGuess = guesses.at(-1);
 
-  lastGuess.result = result
-  lastGuess.finalWeapon = weapon
+  lastGuess.result = result;
+  lastGuess.finalWeapon = weapon;
 
   (player.points += point) >= 5 && (player.points = 0);
 
