@@ -1,9 +1,4 @@
-const fs = require('fs');
-
-function readDb(dbName = 'players.json') {
-    const data = fs.readFileSync(dbName, 'utf-8');
-    return JSON.parse(data);
-}
+const fs = require('fs')
 
 function writeDb(userName, contestantName, season, episode, playerData) {
     const player = playerData
@@ -26,4 +21,4 @@ function writeDb(userName, contestantName, season, episode, playerData) {
     }
 }
 
-module.exports = { readDb, writeDb }
+module.exports = { writeDb }

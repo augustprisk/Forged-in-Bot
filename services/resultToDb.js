@@ -8,6 +8,8 @@ function writeDb(userName, result, weapon, point, playerData) {
   lastGuess.result = result;
   lastGuess.finalWeapon = weapon;
 
+  if ((result === 'lose') && guesses.at(-1).hasOwnProperty('secondGuess')) point = -1;
+
   (player.points += point) >= 5 && (player.points = 0);
 
   try {
