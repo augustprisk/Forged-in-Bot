@@ -1,4 +1,4 @@
-const { readDb } = require('../services/readDb');
+const { readDb } = require('../helper/readDb.js');
 const { writeDoubleDown } = require('../services/writeDoubleDown.js');
 
 function doubleDownGuess(userName, contestant, fileName = 'players.json') {

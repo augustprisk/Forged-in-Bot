@@ -1,10 +1,10 @@
-const { writeDb } = require('../services/guessToDb')
-const { readDb } = require('../services/readDb')
+const { guessToDb } = require('../services/guessToDb')
+const { readDb } = require('../helper/readDb')
 
 function makeGuess(userName, contestantName, season, episode, fileName = 'players.json') {
-    const playerData = readDb(fileName)
+    const data = readDb(fileName)
 
-    writeDb(userName, contestantName, season, episode, playerData)
+    guessToDb(userName, contestantName, season, episode, data)
 }
 
 module.exports = { makeGuess }

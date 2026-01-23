@@ -1,10 +1,10 @@
-const { readDb } = require('../services/readDb');
-const { writeDb } = require('../services/resultToDb');
+const { readDb } = require('../helper/readDb');
+const { resultToDb } = require('../services/resultToDb');
 
 function writeResult(userName, result, weapon, point, fileName = 'players.json') {
-  const playerData = readDb(fileName);
+  const data = readDb(fileName);
 
-  writeDb(userName, result, weapon, point, playerData);
+  writeDb(userName, result, weapon, point, data);
 }
 
 module.exports = { writeResult }

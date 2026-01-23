@@ -1,10 +1,10 @@
-const { readDb } = require('../services/readDb');
+const { readDb } = require('../helper/readDb');
 const { fetchWins } = require('../services/fetchWins');
 
 function getWins(userName, fileName = 'players.json') {
-  const playerData = readDb(fileName);
+  const data = readDb(fileName);
 
-  return fetchWins(userName, playerData);
+  return fetchWins(userName, data);
 }
 
 module.exports = { getWins }
