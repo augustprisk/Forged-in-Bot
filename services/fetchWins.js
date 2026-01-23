@@ -1,7 +1,7 @@
 const fs = require('fs');
 
-function fetchWins(userName, playerData) {
-  const wins = playerData.Players[userName].guesses.filter(guess => guess.result === 'win');
+function fetchWins(userName, data) {
+  const wins = data.Players[userName].guesses.filter(guess => guess.result === 'win');
 
   return wins
 }

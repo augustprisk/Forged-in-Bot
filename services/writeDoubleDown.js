@@ -1,16 +1,11 @@
-const fs = require('fs');
+const { writeDb } = require('../helper/writeDb')
 
 function writeDoubleDown(userName, contestant, data) {
   guess = data.Players[userName].guesses.at(-1);
 
   guess.secondGuess = contestant;
 
-  try {
-      fs.writeFileSync('players.json', JSON.stringify(data))
-      return console.log('Save successful')
-  } catch(err) {
-      return console.log(`Save Failed: ${err}`)
-  }
+  writeDb(data)
 }
 
 module.exports = { writeDoubleDown }

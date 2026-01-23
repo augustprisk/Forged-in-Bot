@@ -1,9 +1,9 @@
-const fs = require('fs')
+const { writeDb } = require('../helper/writeDb')
 
-function writeDb(userName, contestantName, season, episode, playerData) {
+function guessToDb(userName, contestantName, season, episode, data) {
     const player = playerData
 
-    playerData.Players[userName].guesses.push(
+    data.Players[userName].guesses.push(
         {
             season: season,
             episode: episode,
@@ -13,12 +13,7 @@ function writeDb(userName, contestantName, season, episode, playerData) {
         }
     )
 
-    try {
-        fs.writeFileSync('players.json', JSON.stringify(playerData))
-        return console.log('Save successful')
-    } catch(err) {
-        return console.log(`Save Failed: ${err}`)
-    }
+    writeDb(data)
 }
 
-module.exports = { writeDb }
+module.exports = { guessToDb }
