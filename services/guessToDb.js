@@ -1,7 +1,7 @@
 const { writeDb } = require('../helper/writeDb')
 
 function guessToDb(userName, contestantName, season, episode, data) {
-    const player = playerData
+    const player = data
 
     data.Players[userName].guesses.push(
         {

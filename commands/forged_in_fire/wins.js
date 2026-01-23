@@ -29,7 +29,7 @@ module.exports = {
           itemsPerPage: 3,
           formatPage: (pageWins) => {
             const description = pageWins.map(win => 
-              `**Season ${win.season} Episode ${win.episode}**\nContestant: ${win.contestant}\nWinning Weapon: ${win.winningWeapon}`
+              `**Season ${win.season} Episode ${win.episode}**\nContestant: ${win.contestant}\nWinning Weapon: ${win.finalWeapon}`
             ).join('\n\n');
             return new EmbedBuilder().setColor("Blurple").setDescription(description);
           }

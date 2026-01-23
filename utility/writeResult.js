@@ -4,7 +4,7 @@ const { resultToDb } = require('../services/resultToDb');
 function writeResult(userName, result, weapon, point, fileName = 'players.json') {
   const data = readDb(fileName);
 
-  writeDb(userName, result, weapon, point, data);
+  resultToDb(userName, result, weapon, point, data);
 }
 
 module.exports = { writeResult }

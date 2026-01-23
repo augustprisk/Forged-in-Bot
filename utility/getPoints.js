@@ -1,4 +1,4 @@
-const { readDb } = require('../services/readDb')
+const { readDb } = require('../helper/readDb')
 
 function getPoints(userName, fileName = 'players.json') {
   const data = readDb(fileName);
