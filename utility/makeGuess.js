@@ -1,8 +1,8 @@
 const { writeDb } = require('../services/guessToDb')
-const fs = require('fs')
+const { readDb } = require('../services/readDb')
 
-function makeGuess(userName, contestantName, season, episode, dbPath = 'players.json') {
-    const playerData = JSON.parse(fs.readFileSync(dbPath));
+function makeGuess(userName, contestantName, season, episode, fileName = 'players.json') {
+    const playerData = readDb(fileName)
 
     writeDb(userName, contestantName, season, episode, playerData)
 }

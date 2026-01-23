@@ -1,8 +1,8 @@
-const fs = require('fs');
+const { readDb } = require('../services/readDb')
 
-function getPoints(userName) {
-  playerData = JSON.parse(fs.readFileSync('players.json'));
-  const points = playerData.Players[userName].points
+function getPoints(userName, fileName = 'players.json') {
+  const playerData = readDb(fileName);
+  const points = playerData.Players[userName].points;
 
   return points
 }
