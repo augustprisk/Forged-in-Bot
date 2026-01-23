@@ -21,16 +21,19 @@ module.exports = {
 
     try{
       const wins = await getWins(userName);
-      const embeds = [];
-      
-      for (const win of wins) {
-        embeds.push(new EmbedBuilder().setColor("Blurple").setDescription(`Season: ${win.season} Episode: ${win.episode}, Contestant: ${win.contestant}, Winning Weapon: ${win.finalWeapon}`))
-      }
 
       if (wins.length === 0){
         await interaction.reply('You have no wins lmao :sob:')
       } else {
-        await pagination(interaction, embeds)
+        await pagination(interaction, wins,  {
+          itemsPerPage: 3,
+          formatPage: (pageWins) => {
+            const description = pageWins.map(win => 
+              `**Season ${win.season} Episode ${win.episode}**\nContestant: ${win.contestant}\nWinning Weapon: ${win.finalWeapon}`
+            ).join('\n\n');
+            return new EmbedBuilder().setColor("Blurple").setDescription(description);
+          }
+        });
       }
 
     } catch(err) {

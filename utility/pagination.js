@@ -1,11 +1,20 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
 
-module.exports = async(interaction, pages, time = 30 * 1000) => {
+module.exports = async(interaction, data, options = {}) => {
 
   try {
-    if (!interaction || !pages || !pages > 0) throw new Error('[PAGINATION] Invalid args');
+    const { itemsPerPage = 1, formatPage, time = 30 * 1000 } = options;
+
+    if (!interaction || !data || !data > 0) throw new Error('[PAGINATION] Invalid args');
 
     await interaction.deferReply();
+
+    const pages = [];
+    for (let i = 0; i < data.length; i += itemsPerPage) {
+      const pageItems = data.slice(i, i + itemsPerPage);
+      const embed = formatPage(pageItems);
+      pages.push(embed);
+    }
 
     if (pages.length === 1) {
       return await interaction.editReply({ embeds: pages, components: [], fetchReply: true });
