@@ -32,7 +32,9 @@ module.exports = {
         `${userName} doubled down with ${contestant} :smiling_imp:`
       );
     } catch (err) {
-      `A problem occured with this command: ${err}`
+      await interaction.reply(
+          `There was an error with this command: ${err}`
+        )
     }
   }
 }
