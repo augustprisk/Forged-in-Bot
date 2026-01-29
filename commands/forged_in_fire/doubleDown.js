@@ -25,10 +25,14 @@ module.exports = {
     const userName = interaction.options.getString('user', true);
     const contestant = interaction.options.getString('contestant', true);
 
-    await doubleDownGuess(userName, contestant);
+    try{
+      await doubleDownGuess(userName, contestant);
 
-    await interaction.reply(
-      `${userName} doubled down with ${contestant} :smiling_imp:`
-    );
+      await interaction.reply(
+        `${userName} doubled down with ${contestant} :smiling_imp:`
+      );
+    } catch (err) {
+      `A problem occured with this command: ${err}`
+    }
   }
 }
