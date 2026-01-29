@@ -1,8 +1,6 @@
 const { writeDb } = require('../helper/writeDb')
 
-function guessToDb(userName, contestantName, season, episode, data) {
-    const player = data
-
+function guessToDb(userName, contestantName, season, episode, data, fileName = 'players.json') {
     data.Players[userName].guesses.push(
         {
             season: season,
@@ -13,7 +11,7 @@ function guessToDb(userName, contestantName, season, episode, data) {
         }
     )
 
-    writeDb(data)
+    writeDb(fileName, data)
 }
 
 module.exports = { guessToDb }

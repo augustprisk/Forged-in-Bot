@@ -1,6 +1,6 @@
 const { writeDb } = require('../helper/writeDb')
 
-function resultToDb(userName, result, weapon, point, data) {
+function resultToDb(userName, result, weapon, point, data, fileName = 'players.json') {
   const player = data.Players[userName];
   const guesses = player.guesses;
   const lastGuess = guesses.at(-1);
@@ -12,7 +12,7 @@ function resultToDb(userName, result, weapon, point, data) {
 
   (player.points += point) >= 5 && (player.points = 0);
 
-  writeDb(data)
+  writeDb(fileName, data)
 }
 
 module.exports = { resultToDb }
