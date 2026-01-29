@@ -6,3 +6,4 @@ players.json
 test.json
 coverage
 test/fixtures
+.claude
