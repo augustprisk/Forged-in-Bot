@@ -1,7 +1,8 @@
 const fs = require('fs')
 
-function readDb(fileName) {
-  return JSON.parse(fs.readFileSync(fileName))
+async function readDb(fileName) {
+  const data = await fs.promises.readFile(fileName)
+  return JSON.parse(data)
 }
 
 module.exports = { readDb }

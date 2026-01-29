@@ -1,8 +1,8 @@
 const fs = require('fs');
 
-function writeDb(data) {
+async function writeDb(fileName = 'players.json', data) {
     try {
-        fs.writeFileSync('players.json', JSON.stringify(data));
+        await fs.promises.writeFile(fileName, JSON.stringify(data));
         return console.log('Save successful');
     } catch(err) {
         return console.log(`Save Failed: ${err}`);
