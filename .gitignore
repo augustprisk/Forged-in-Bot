@@ -5,3 +5,4 @@ config.json
 players.json
 test.json
 coverage
+test/fixtures
