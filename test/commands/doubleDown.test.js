@@ -64,7 +64,7 @@ describe('double_down command', () => {
 		);
 	});
 
-	test('should still reply even if doubleDownGuess throws error', async () => {
+	test('should reply with error message when doubleDownGuess throws', async () => {
 		const mockInteraction = createMockInteraction({
 			user: 'August',
 			contestant: 'John Doe',
@@ -72,7 +72,10 @@ describe('double_down command', () => {
 
 		doubleDownGuess.mockRejectedValue(new Error('Database error'));
 
-		await expect(doubleDownCommand.execute(mockInteraction)).rejects.toThrow('Database error');
+		await doubleDownCommand.execute(mockInteraction);
 		expect(doubleDownGuess).toHaveBeenCalledWith('August', 'John Doe');
+		expect(mockInteraction.reply).toHaveBeenCalledWith(
+			'There was an error with this command: Error: Database error'
+		);
 	});
 });

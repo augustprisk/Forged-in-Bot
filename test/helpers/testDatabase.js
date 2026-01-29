@@ -26,8 +26,18 @@ function setupTestDatabase() {
 }
 
 function cleanupTestDatabase() {
-	if (fs.existsSync(TEST_DB_PATH)) {
-		fs.unlinkSync(TEST_DB_PATH);
+	try {
+		if (fs.existsSync(TEST_DB_PATH)) {
+			fs.unlinkSync(TEST_DB_PATH);
+		}
+	} catch (err) {
+		// On Windows, file handles from async operations may not be fully released.
+		// Reset the file contents instead of deleting.
+		try {
+			fs.writeFileSync(TEST_DB_PATH, JSON.stringify(initialTestData, null, 2));
+		} catch (_) {
+			// ignore
+		}
 	}
 }
 

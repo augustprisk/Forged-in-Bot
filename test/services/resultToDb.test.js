@@ -36,7 +36,7 @@ describe('resultToDb', () => {
 		expect(lastGuess.result).toBe('win');
 		expect(lastGuess.finalWeapon).toBe('Katana');
 		expect(mockData.Players.August.points).toBe(1);
-		expect(writeDb).toHaveBeenCalledWith(mockData);
+		expect(writeDb).toHaveBeenCalledWith('players.json', mockData);
 	});
 
 	test('should update last guess with lose result and weapon', () => {
@@ -67,7 +67,7 @@ describe('resultToDb', () => {
 		expect(lastGuess.result).toBe('lose');
 		expect(lastGuess.finalWeapon).toBe('Sword');
 		expect(mockData.Players.August.points).toBe(2); // No change for loss
-		expect(writeDb).toHaveBeenCalledWith(mockData);
+		expect(writeDb).toHaveBeenCalledWith('players.json', mockData);
 	});
 
 	test('should reset points to 0 when reaching 5', () => {
@@ -95,7 +95,7 @@ describe('resultToDb', () => {
 		resultToDb('August', 'win', 'Katana', 1, mockData);
 
 		expect(mockData.Players.August.points).toBe(0); // Reset to 0 after reaching 5
-		expect(writeDb).toHaveBeenCalledWith(mockData);
+		expect(writeDb).toHaveBeenCalledWith('players.json', mockData);
 	});
 
 	test('should deduct 1 point for loss with secondGuess (double down)', () => {
@@ -124,7 +124,7 @@ describe('resultToDb', () => {
 		resultToDb('August', 'lose', 'Sword', 0, mockData);
 
 		expect(mockData.Players.August.points).toBe(2); // 3 + (-1) = 2
-		expect(writeDb).toHaveBeenCalledWith(mockData);
+		expect(writeDb).toHaveBeenCalledWith('players.json', mockData);
 	});
 
 	test('should not deduct points for loss without secondGuess', () => {
@@ -152,7 +152,7 @@ describe('resultToDb', () => {
 		resultToDb('August', 'lose', 'Sword', 0, mockData);
 
 		expect(mockData.Players.August.points).toBe(3); // No change
-		expect(writeDb).toHaveBeenCalledWith(mockData);
+		expect(writeDb).toHaveBeenCalledWith('players.json', mockData);
 	});
 
 	test('should add points correctly for win', () => {
@@ -180,7 +180,7 @@ describe('resultToDb', () => {
 		resultToDb('Grace', 'win', 'Axe', 1, mockData);
 
 		expect(mockData.Players.Grace.points).toBe(3);
-		expect(writeDb).toHaveBeenCalledWith(mockData);
+		expect(writeDb).toHaveBeenCalledWith('players.json', mockData);
 	});
 
 	test('should handle multiple guesses and update only the last one', () => {

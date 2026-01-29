@@ -34,7 +34,7 @@ describe('writeDoubleDown', () => {
 
 		const lastGuess = mockData.Players.August.guesses.at(-1);
 		expect(lastGuess.secondGuess).toBe('Jane Smith');
-		expect(writeDb).toHaveBeenCalledWith(mockData);
+		expect(writeDb).toHaveBeenCalledWith('players.json', mockData);
 	});
 
 	test('should add secondGuess to last guess for Grace', () => {
@@ -63,7 +63,7 @@ describe('writeDoubleDown', () => {
 
 		const lastGuess = mockData.Players.Grace.guesses.at(-1);
 		expect(lastGuess.secondGuess).toBe('Bob Johnson');
-		expect(writeDb).toHaveBeenCalledWith(mockData);
+		expect(writeDb).toHaveBeenCalledWith('players.json', mockData);
 	});
 
 	test('should update only the last guess when multiple guesses exist', () => {
@@ -99,7 +99,7 @@ describe('writeDoubleDown', () => {
 
 		expect(mockData.Players.August.guesses[0].secondGuess).toBeUndefined();
 		expect(mockData.Players.August.guesses[1].secondGuess).toBe('Third Person');
-		expect(writeDb).toHaveBeenCalledWith(mockData);
+		expect(writeDb).toHaveBeenCalledWith('players.json', mockData);
 	});
 
 	test('should overwrite existing secondGuess if called again', () => {
@@ -129,7 +129,7 @@ describe('writeDoubleDown', () => {
 
 		const lastGuess = mockData.Players.August.guesses.at(-1);
 		expect(lastGuess.secondGuess).toBe('New Guess');
-		expect(writeDb).toHaveBeenCalledWith(mockData);
+		expect(writeDb).toHaveBeenCalledWith('players.json', mockData);
 	});
 
 	test('should not affect other properties of the guess', () => {

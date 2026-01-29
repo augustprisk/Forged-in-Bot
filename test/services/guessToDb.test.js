@@ -32,7 +32,7 @@ describe('guessToDb', () => {
 			result: null,
 			finalWeapon: null,
 		});
-		expect(writeDb).toHaveBeenCalledWith(mockData);
+		expect(writeDb).toHaveBeenCalledWith('players.json', mockData);
 	});
 
 	test('should add a guess to Grace\'s guesses array', () => {
@@ -59,7 +59,7 @@ describe('guessToDb', () => {
 			result: null,
 			finalWeapon: null,
 		});
-		expect(writeDb).toHaveBeenCalledWith(mockData);
+		expect(writeDb).toHaveBeenCalledWith('players.json', mockData);
 	});
 
 	test('should add multiple guesses to the same player', () => {
@@ -88,7 +88,7 @@ describe('guessToDb', () => {
 
 		expect(mockData.Players.August.guesses).toHaveLength(2);
 		expect(mockData.Players.August.guesses[1].contestant).toBe('Second Person');
-		expect(writeDb).toHaveBeenCalledWith(mockData);
+		expect(writeDb).toHaveBeenCalledWith('players.json', mockData);
 	});
 
 	test('should initialize guess with null result and finalWeapon', () => {
