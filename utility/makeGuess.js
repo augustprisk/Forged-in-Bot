@@ -4,7 +4,7 @@ const { readDb } = require('../helper/readDb')
 async function makeGuess(userName, contestantName, season, episode, fileName = 'players.json') {
     const data = await readDb(fileName)
 
-    guessToDb(userName, contestantName, season, episode, data, fileName)
+    await guessToDb(userName, contestantName, season, episode, data, fileName)
 }
 
 module.exports = { makeGuess }
