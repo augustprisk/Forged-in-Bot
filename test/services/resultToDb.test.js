@@ -30,7 +30,7 @@ describe('resultToDb', () => {
 			},
 		};
 
-		resultToDb('August', 'win', 'Katana', 1, mockData);
+		resultToDb('August', 'John Doe', 'Katana', 1, mockData);
 
 		const lastGuess = mockData.Players.August.guesses.at(-1);
 		expect(lastGuess.result).toBe('win');
@@ -212,7 +212,7 @@ describe('resultToDb', () => {
 			},
 		};
 
-		resultToDb('August', 'win', 'Katana', 1, mockData);
+		resultToDb('August', 'Second', 'Katana', 1, mockData);
 
 		expect(mockData.Players.August.guesses[0].result).toBe('win');
 		expect(mockData.Players.August.guesses[0].finalWeapon).toBe('Sword');

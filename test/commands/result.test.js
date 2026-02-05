@@ -14,109 +14,52 @@ describe('result command', () => {
 		expect(resultCommand.data.description).toBe('Was your guess right or wrong?');
 	});
 
-	describe('win subcommand', () => {
-		test('should execute successfully with valid inputs', async () => {
-			const mockInteraction = createMockInteraction({
-				user: 'August',
-				weapon: 'Katana',
-				subcommand: 'win',
-			});
-
-			await resultCommand.execute(mockInteraction);
-
-			expect(writeResult).toHaveBeenCalledWith('August', 'win', 'Katana', 1);
-			expect(mockInteraction.reply).toHaveBeenCalledWith(
-				'TestUser, your win has been recorded'
-			);
+	test('should execute successfully with valid inputs', async () => {
+		const mockInteraction = createMockInteraction({
+			user: 'August',
+			winner: 'James',
+			weapon: 'Katana'
 		});
 
-		test('should execute successfully with Grace as user', async () => {
-			const mockInteraction = createMockInteraction({
-				user: 'Grace',
-				weapon: 'Longsword',
-				subcommand: 'win',
-			});
+		await resultCommand.execute(mockInteraction);
 
-			await resultCommand.execute(mockInteraction);
-
-			expect(writeResult).toHaveBeenCalledWith('Grace', 'win', 'Longsword', 1);
-			expect(mockInteraction.reply).toHaveBeenCalledWith(
-				'TestUser, your win has been recorded'
-			);
-		});
-
-		test('should handle errors from writeResult', async () => {
-			const mockInteraction = createMockInteraction({
-				user: 'August',
-				weapon: 'Katana',
-				subcommand: 'win',
-			});
-
-			const errorMessage = 'Database error';
-			writeResult.mockImplementation(() => {
-				throw new Error(errorMessage);
-			});
-
-			await resultCommand.execute(mockInteraction);
-
-			expect(mockInteraction.reply).toHaveBeenCalledWith(
-				`There was an error with this command: Error: ${errorMessage}`
-			);
-		});
+		expect(writeResult).toHaveBeenCalledWith('August', 'James', 'Katana', 1);
+		expect(mockInteraction.reply).toHaveBeenCalledWith(
+			'August, your result has been recorded'
+		);
 	});
 
-	describe('loss subcommand', () => {
-		test('should execute successfully with valid inputs', async () => {
-			const mockInteraction = createMockInteraction({
-				user: 'August',
-				weapon: 'Katana',
-				subcommand: 'loss',
-			});
-
-			writeResult.mockResolvedValue(undefined);
-
-			await resultCommand.execute(mockInteraction);
-
-			expect(writeResult).toHaveBeenCalledWith('August', 'lose', 'Katana', 0);
-			expect(mockInteraction.reply).toHaveBeenCalledWith(
-				'TestUser, your loss has been recorded'
-			);
+	test('should execute successfully with Grace as user', async () => {
+		const mockInteraction = createMockInteraction({
+			user: 'Grace',
+			winner: 'Leon',
+			weapon: 'Longsword'
 		});
 
-		test('should execute successfully with Grace as user', async () => {
-			const mockInteraction = createMockInteraction({
-				user: 'Grace',
-				weapon: 'Longsword',
-				subcommand: 'loss',
-			});
+		await resultCommand.execute(mockInteraction);
 
-			writeResult.mockResolvedValue(undefined);
+		expect(writeResult).toHaveBeenCalledWith('Grace', 'Leon', 'Longsword', 1);
+		expect(mockInteraction.reply).toHaveBeenCalledWith(
+			'Grace, your result has been recorded'
+		);
+	});
 
-			await resultCommand.execute(mockInteraction);
-
-			expect(writeResult).toHaveBeenCalledWith('Grace', 'lose', 'Longsword', 0);
-			expect(mockInteraction.reply).toHaveBeenCalledWith(
-				'TestUser, your loss has been recorded'
-			);
+	test('should handle errors from writeResult', async () => {
+		const mockInteraction = createMockInteraction({
+			user: 'August',
+			winner: 'James',
+			weapon: 'Katana'
 		});
 
-		test('should handle errors from writeResult', async () => {
-			const mockInteraction = createMockInteraction({
-				user: 'August',
-				weapon: 'Katana',
-				subcommand: 'loss',
-			});
-
-			const errorMessage = 'Database error';
-			writeResult.mockImplementation(() => {
-				throw new Error(errorMessage);
-			});
-
-			await resultCommand.execute(mockInteraction);
-
-			expect(mockInteraction.reply).toHaveBeenCalledWith(
-				`There was an error with this command: Error: ${errorMessage}`
-			);
+		const errorMessage = 'Database error';
+		writeResult.mockImplementation(() => {
+			throw new Error(errorMessage);
 		});
+
+		await resultCommand.execute(mockInteraction);
+
+		expect(mockInteraction.reply).toHaveBeenCalledWith(
+			`There was an error with this command: Error: ${errorMessage}`
+		);
 	});
 });
