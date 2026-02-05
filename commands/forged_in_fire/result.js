@@ -4,7 +4,7 @@ const { writeResult } = require('../../utility/writeResult')
 module.exports = {
   data: new SlashCommandBuilder()
   .setName('result')
-  .setDescription('Was your guess right or wrong?')
+  .setDescription('Enter the winner and final weapon')
   .addStringOption((Option) => 
     Option
         .setName('user')

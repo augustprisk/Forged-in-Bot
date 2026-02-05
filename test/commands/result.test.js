@@ -11,7 +11,7 @@ describe('result command', () => {
 
 	test('should have correct command data', () => {
 		expect(resultCommand.data.name).toBe('result');
-		expect(resultCommand.data.description).toBe('Was your guess right or wrong?');
+		expect(resultCommand.data.description).toBe('Enter the winner and final weapon');
 	});
 
 	test('should execute successfully with valid inputs', async () => {
