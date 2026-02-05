@@ -6,6 +6,7 @@ function guessToDb(userName, contestantName, season, episode, data, fileName = '
             season: season,
             episode: episode,
             contestant: contestantName,
+            winner: null,
             result: null,
             finalWeapon: null,
         }
