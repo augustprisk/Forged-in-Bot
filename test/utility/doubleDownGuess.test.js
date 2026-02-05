@@ -75,7 +75,7 @@ describe('doubleDownGuess (integration)', () => {
 	test('should work before result is recorded', async () => {
 		await makeGuess('August', 'First Guess', '5', '10', TEST_DB_PATH);
 		await doubleDownGuess('August', 'Second Guess', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Katana', 1, TEST_DB_PATH);
+		await writeResult('August', 'Second Guess', 'Katana', 1, TEST_DB_PATH);
 
 		const data = getTestData();
 		const lastGuess = data.Players.August.guesses.at(-1);
@@ -136,17 +136,17 @@ describe('doubleDownGuess (integration)', () => {
 	test('should work in complete game flow', async () => {
 		// First round - normal win
 		await makeGuess('Grace', 'Round 1 Guess', '1', '1', TEST_DB_PATH);
-		await writeResult('Grace', 'win', 'Sword', 1, TEST_DB_PATH);
+		await writeResult('Grace', 'Round 1 Guess', 'Sword', 1, TEST_DB_PATH);
 
 		// Second round - double down win
 		await makeGuess('Grace', 'Round 2 First', '2', '2', TEST_DB_PATH);
 		await doubleDownGuess('Grace', 'Round 2 Second', TEST_DB_PATH);
-		await writeResult('Grace', 'win', 'Axe', 1, TEST_DB_PATH);
+		await writeResult('Grace', 'Round 2 Second', 'Axe', 1, TEST_DB_PATH);
 
 		// Third round - double down loss
 		await makeGuess('Grace', 'Round 3 First', '3', '3', TEST_DB_PATH);
 		await doubleDownGuess('Grace', 'Round 3 Second', TEST_DB_PATH);
-		await writeResult('Grace', 'lose', 'Spear', 0, TEST_DB_PATH);
+		await writeResult('Grace', 'Round 3 Third', 'Spear', 0, TEST_DB_PATH);
 
 		const data = getTestData();
 		expect(data.Players.Grace.guesses).toHaveLength(3);

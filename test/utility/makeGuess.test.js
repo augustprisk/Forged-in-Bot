@@ -32,6 +32,7 @@ describe('makeGuess (integration)', () => {
 			season: '5',
 			episode: '10',
 			contestant: 'John Doe',
+			winner: null,
 			result: null,
 			finalWeapon: null,
 		});
@@ -46,6 +47,7 @@ describe('makeGuess (integration)', () => {
 			season: '3',
 			episode: '8',
 			contestant: 'Jane Smith',
+			winner: null,
 			result: null,
 			finalWeapon: null,
 		});

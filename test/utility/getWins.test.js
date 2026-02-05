@@ -33,7 +33,7 @@ describe('getWins (integration)', () => {
 
 	test('should return wins for August', async () => {
 		await makeGuess('August', 'John Doe', '5', '10', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Katana', 1, TEST_DB_PATH);
+		await writeResult('August', 'John Doe', 'Katana', 1, TEST_DB_PATH);
 
 		const wins = await getWins('August', TEST_DB_PATH);
 		expect(wins).toHaveLength(1);
@@ -41,6 +41,7 @@ describe('getWins (integration)', () => {
 			season: '5',
 			episode: '10',
 			contestant: 'John Doe',
+			winner: 'John Doe',
 			result: 'win',
 			finalWeapon: 'Katana',
 		});
@@ -48,7 +49,7 @@ describe('getWins (integration)', () => {
 
 	test('should return wins for Grace', async () => {
 		await makeGuess('Grace', 'Jane Smith', '3', '8', TEST_DB_PATH);
-		await writeResult('Grace', 'win', 'Sword', 1, TEST_DB_PATH);
+		await writeResult('Grace', 'Jane Smith', 'Sword', 1, TEST_DB_PATH);
 
 		const wins = await getWins('Grace', TEST_DB_PATH);
 		expect(wins).toHaveLength(1);
@@ -57,13 +58,13 @@ describe('getWins (integration)', () => {
 
 	test('should return only wins, not losses', async () => {
 		await makeGuess('August', 'Winner', '1', '1', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Sword', 1, TEST_DB_PATH);
+		await writeResult('August', 'Winner', 'Sword', 1, TEST_DB_PATH);
 
 		await makeGuess('August', 'Loser', '2', '2', TEST_DB_PATH);
 		await writeResult('August', 'lose', 'Axe', 0, TEST_DB_PATH);
 
 		await makeGuess('August', 'Another Winner', '3', '3', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Spear', 1, TEST_DB_PATH);
+		await writeResult('August', 'Another Winner', 'Spear', 1, TEST_DB_PATH);
 
 		const wins = await getWins('August', TEST_DB_PATH);
 		expect(wins).toHaveLength(2);
@@ -74,7 +75,7 @@ describe('getWins (integration)', () => {
 
 	test('should not include pending guesses (null result)', async () => {
 		await makeGuess('Grace', 'Winner', '1', '1', TEST_DB_PATH);
-		await writeResult('Grace', 'win', 'Sword', 1, TEST_DB_PATH);
+		await writeResult('Grace', 'Winner', 'Sword', 1, TEST_DB_PATH);
 
 		await makeGuess('Grace', 'Pending', '2', '2', TEST_DB_PATH);
 		// Don't write result for this one
@@ -86,13 +87,13 @@ describe('getWins (integration)', () => {
 
 	test('should return multiple wins in correct order', async () => {
 		await makeGuess('August', 'First Win', '1', '1', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Sword', 1, TEST_DB_PATH);
+		await writeResult('August', 'First Win', 'Sword', 1, TEST_DB_PATH);
 
 		await makeGuess('August', 'Second Win', '2', '2', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Axe', 1, TEST_DB_PATH);
+		await writeResult('August', 'Second Win', 'Axe', 1, TEST_DB_PATH);
 
 		await makeGuess('August', 'Third Win', '3', '3', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Spear', 1, TEST_DB_PATH);
+		await writeResult('August', 'Third Win', 'Spear', 1, TEST_DB_PATH);
 
 		const wins = await getWins('August', TEST_DB_PATH);
 		expect(wins).toHaveLength(3);
@@ -128,12 +129,13 @@ describe('getWins (integration)', () => {
 
 	test('should include all win properties', async () => {
 		await makeGuess('August', 'Test Contestant', '7', '14', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Test Weapon', 1, TEST_DB_PATH);
+		await writeResult('August', 'Test Contestant', 'Test Weapon', 1, TEST_DB_PATH);
 
 		const wins = await getWins('August', TEST_DB_PATH);
 		expect(wins[0]).toHaveProperty('season');
 		expect(wins[0]).toHaveProperty('episode');
 		expect(wins[0]).toHaveProperty('contestant');
+		expect(wins[0]).toHaveProperty('winner');
 		expect(wins[0]).toHaveProperty('result');
 		expect(wins[0]).toHaveProperty('finalWeapon');
 		expect(wins[0].season).toBe('7');
@@ -143,13 +145,13 @@ describe('getWins (integration)', () => {
 
 	test('should track wins independently for both players', async () => {
 		await makeGuess('August', 'August Win', '1', '1', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Katana', 1, TEST_DB_PATH);
+		await writeResult('August', 'August Win', 'Katana', 1, TEST_DB_PATH);
 
 		await makeGuess('Grace', 'Grace Win 1', '2', '2', TEST_DB_PATH);
-		await writeResult('Grace', 'win', 'Sword', 1, TEST_DB_PATH);
+		await writeResult('Grace', 'Grace Win 1', 'Sword', 1, TEST_DB_PATH);
 
 		await makeGuess('Grace', 'Grace Win 2', '3', '3', TEST_DB_PATH);
-		await writeResult('Grace', 'win', 'Axe', 1, TEST_DB_PATH);
+		await writeResult('Grace', 'Grace Win 2', 'Axe', 1, TEST_DB_PATH);
 
 		const augustWins = await getWins('August', TEST_DB_PATH);
 		const graceWins = await getWins('Grace', TEST_DB_PATH);

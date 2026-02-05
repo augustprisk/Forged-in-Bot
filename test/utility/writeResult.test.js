@@ -26,7 +26,7 @@ describe('writeResult (integration)', () => {
 
 	test('should record a win result for August', async () => {
 		await makeGuess('August', 'John Doe', '5', '10', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Katana', 1, TEST_DB_PATH);
+		await writeResult('August', 'John Doe', 'Katana', 1, TEST_DB_PATH);
 
 		const data = getTestData();
 		const lastGuess = data.Players.August.guesses.at(-1);
@@ -37,7 +37,7 @@ describe('writeResult (integration)', () => {
 
 	test('should record a loss result for Grace', async () => {
 		await makeGuess('Grace', 'Jane Smith', '3', '8', TEST_DB_PATH);
-		await writeResult('Grace', 'lose', 'Longsword', 0, TEST_DB_PATH);
+		await writeResult('Grace', 'Janet Smith', 'Longsword', 0, TEST_DB_PATH);
 
 		const data = getTestData();
 		const lastGuess = data.Players.Grace.guesses.at(-1);
@@ -48,13 +48,13 @@ describe('writeResult (integration)', () => {
 
 	test('should accumulate points for multiple wins', async () => {
 		await makeGuess('August', 'First', '1', '1', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Sword', 1, TEST_DB_PATH);
+		await writeResult('August', 'First', 'Sword', 1, TEST_DB_PATH);
 
 		await makeGuess('August', 'Second', '2', '2', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Axe', 1, TEST_DB_PATH);
+		await writeResult('August', 'Second', 'Axe', 1, TEST_DB_PATH);
 
 		await makeGuess('August', 'Third', '3', '3', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Spear', 1, TEST_DB_PATH);
+		await writeResult('August', 'Third', 'Spear', 1, TEST_DB_PATH);
 
 		const data = getTestData();
 		expect(data.Players.August.points).toBe(3);
@@ -63,19 +63,19 @@ describe('writeResult (integration)', () => {
 
 	test('should reset points to 0 when reaching 5', async () => {
 		await makeGuess('August', 'First', '1', '1', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Sword', 1, TEST_DB_PATH);
+		await writeResult('August', 'First', 'Sword', 1, TEST_DB_PATH);
 
 		await makeGuess('August', 'Second', '2', '2', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Axe', 1, TEST_DB_PATH);
+		await writeResult('August', 'Second', 'Axe', 1, TEST_DB_PATH);
 
 		await makeGuess('August', 'Third', '3', '3', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Spear', 1, TEST_DB_PATH);
+		await writeResult('August', 'Third', 'Spear', 1, TEST_DB_PATH);
 
 		await makeGuess('August', 'Fourth', '4', '4', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Hammer', 1, TEST_DB_PATH);
+		await writeResult('August', 'Fourth', 'Hammer', 1, TEST_DB_PATH);
 
 		await makeGuess('August', 'Fifth', '5', '5', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Katana', 1, TEST_DB_PATH);
+		await writeResult('August', 'Fifth', 'Katana', 1, TEST_DB_PATH);
 
 		const data = getTestData();
 		expect(data.Players.August.points).toBe(0); // Reset after reaching 5
@@ -83,10 +83,10 @@ describe('writeResult (integration)', () => {
 
 	test('should handle loss without affecting points', async () => {
 		await makeGuess('August', 'Winner', '1', '1', TEST_DB_PATH);
-		await writeResult('August', 'win', 'Sword', 1, TEST_DB_PATH);
+		await writeResult('August', 'Winner', 'Sword', 1, TEST_DB_PATH);
 
 		await makeGuess('August', 'Loser', '2', '2', TEST_DB_PATH);
-		await writeResult('August', 'lose', 'Axe', 0, TEST_DB_PATH);
+		await writeResult('August', 'Lose', 'Axe', 0, TEST_DB_PATH);
 
 		const data = getTestData();
 		expect(data.Players.August.points).toBe(1); // Still 1 from first win
@@ -109,7 +109,7 @@ describe('writeResult (integration)', () => {
 
 	test('should update only last guess when multiple guesses exist', async () => {
 		await makeGuess('Grace', 'First', '1', '1', TEST_DB_PATH);
-		await writeResult('Grace', 'win', 'Sword', 1, TEST_DB_PATH);
+		await writeResult('Grace', 'First', 'Sword', 1, TEST_DB_PATH);
 
 		await makeGuess('Grace', 'Second', '2', '2', TEST_DB_PATH);
 		await writeResult('Grace', 'lose', 'Axe', 0, TEST_DB_PATH);
